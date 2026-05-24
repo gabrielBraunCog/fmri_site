@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RSA Phase Winner Maps</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="viewer-panel" aria-label="Brain map viewer">
+        <header class="topbar">
+          <div>
+            <h1>RSA Phase Winner Maps</h1>
+            <p id="mapSummary">Loading data...</p>
+          </div>
+          <div class="status-pill" id="loadStatus">Loading</div>
+        </header>
+
+        <div class="controls" aria-label="Viewer controls">
+          <label class="field">
+            <span>Map</span>
+            <select id="mapSelect"></select>
+          </label>
+
+          <label class="toggle">
+            <input id="overlayToggle" type="checkbox" checked>
+            <span>Significant overlay</span>
+          </label>
+
+          <label class="field range-field">
+            <span>Opacity <strong id="opacityValue">70%</strong></span>
+            <input id="opacitySlider" type="range" min="0" max="100" value="70">
+          </label>
+        </div>
+
+        <div class="slice-grid">
+          <section class="slice-pane">
+            <div class="slice-head">
+              <h2>Sagittal</h2>
+              <span id="xLabel"></span>
+            </div>
+            <canvas id="sagittalCanvas" width="109" height="91"></canvas>
+            <input id="xSlider" type="range" min="0" max="90" value="45" aria-label="Sagittal slice">
+          </section>
+
+          <section class="slice-pane">
+            <div class="slice-head">
+              <h2>Coronal</h2>
+              <span id="yLabel"></span>
+            </div>
+            <canvas id="coronalCanvas" width="91" height="91"></canvas>
+            <input id="ySlider" type="range" min="0" max="108" value="54" aria-label="Coronal slice">
+          </section>
+
+          <section class="slice-pane">
+            <div class="slice-head">
+              <h2>Axial</h2>
+              <span id="zLabel"></span>
+            </div>
+            <canvas id="axialCanvas" width="91" height="109"></canvas>
+            <input id="zSlider" type="range" min="0" max="90" value="45" aria-label="Axial slice">
+          </section>
+        </div>
+      </section>
+
+      <aside class="side-panel" aria-label="Map legend">
+        <section>
+          <h2>Color Codebook</h2>
+          <p class="legend-note">
+            Each color marks the winning RSA model in significant voxels. Negative and positive refer to the sign of the model effect; label 0 is not significant and remains transparent.
+          </p>
+          <div id="legend" class="legend"></div>
+        </section>
+
+        <section>
+          <h2>Labels In Selected Map</h2>
+          <div id="activeLabels" class="label-list"></div>
+        </section>
+
+        <section class="details">
+          <h2>Volume</h2>
+          <dl>
+            <div>
+              <dt>Grid</dt>
+              <dd id="gridValue"></dd>
+            </div>
+            <div>
+              <dt>Voxel size</dt>
+              <dd id="voxelValue"></dd>
+            </div>
+            <div>
+              <dt>Nonzero voxels</dt>
+              <dd id="nonzeroValue"></dd>
+            </div>
+          </dl>
+        </section>
+      </aside>
+    </main>
+
+    <script src="viewer.js" defer></script>
+  </body>
+</html>

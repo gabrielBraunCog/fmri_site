@@ -1,0 +1,12 @@
+winner_code_fsleyes,original_signed_code,model,rsa_sign
+0,0,none,not_significant
+1,-1,fdist,negative
+2,1,fdist,positive
+3,-2,fmean_belief,negative
+4,2,fmean_belief,positive
+5,-3,fextremity,negative
+6,3,fextremity,positive
+7,-4,fside,negative
+8,4,fside,positive
+9,-5,f3cat,negative
+10,5,f3cat,positive

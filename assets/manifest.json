@@ -1,0 +1,251 @@
+{
+  "template": {
+    "name": "MNI152 T1 2mm",
+    "url": "assets/template/MNI152_T1_2mm.nii.gz",
+    "sourceFile": "C:\\Users\\Gabriel\\Desktop\\BIDS\\Experiment 1\\sub-08\\func\\sub-8_func_computer_T_feats.feat\\reg\\standard.nii.gz",
+    "dimensions": [
+      91,
+      109,
+      91
+    ],
+    "pixdim": [
+      2.0,
+      2.0,
+      2.0
+    ],
+    "datatype": 16
+  },
+  "labels": [
+    {
+      "code": 0,
+      "originalSignedCode": 0,
+      "model": "none",
+      "sign": "not_significant",
+      "name": "Not significant",
+      "color": "#000000"
+    },
+    {
+      "code": 1,
+      "originalSignedCode": -1,
+      "model": "fdist",
+      "sign": "negative",
+      "name": "fdist negative",
+      "color": "#3366cc"
+    },
+    {
+      "code": 2,
+      "originalSignedCode": 1,
+      "model": "fdist",
+      "sign": "positive",
+      "name": "fdist positive",
+      "color": "#dc3912"
+    },
+    {
+      "code": 3,
+      "originalSignedCode": -2,
+      "model": "fmean_belief",
+      "sign": "negative",
+      "name": "fmean_belief negative",
+      "color": "#109618"
+    },
+    {
+      "code": 4,
+      "originalSignedCode": 2,
+      "model": "fmean_belief",
+      "sign": "positive",
+      "name": "fmean_belief positive",
+      "color": "#ff9900"
+    },
+    {
+      "code": 5,
+      "originalSignedCode": -3,
+      "model": "fextremity",
+      "sign": "negative",
+      "name": "fextremity negative",
+      "color": "#990099"
+    },
+    {
+      "code": 6,
+      "originalSignedCode": 3,
+      "model": "fextremity",
+      "sign": "positive",
+      "name": "fextremity positive",
+      "color": "#0099c6"
+    },
+    {
+      "code": 7,
+      "originalSignedCode": -4,
+      "model": "fside",
+      "sign": "negative",
+      "name": "fside negative",
+      "color": "#dd4477"
+    },
+    {
+      "code": 8,
+      "originalSignedCode": 4,
+      "model": "fside",
+      "sign": "positive",
+      "name": "fside positive",
+      "color": "#66aa00"
+    },
+    {
+      "code": 9,
+      "originalSignedCode": -5,
+      "model": "f3cat",
+      "sign": "negative",
+      "name": "f3cat negative",
+      "color": "#b82e2e"
+    },
+    {
+      "code": 10,
+      "originalSignedCode": 5,
+      "model": "f3cat",
+      "sign": "positive",
+      "name": "f3cat positive",
+      "color": "#316395"
+    }
+  ],
+  "maps": [
+    {
+      "id": "belief_computer",
+      "name": "Belief Computer",
+      "url": "assets/maps/belief_computer.nii.gz",
+      "sourceFile": "C:\\Users\\Gabriel\\Desktop\\reAnalysis_RSA_DIM\\RSA_phase_mantel_winner_vectors\\belief_computer\\belief_computer.nii",
+      "dimensions": [
+        91,
+        109,
+        91
+      ],
+      "pixdim": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "datatype": 16,
+      "uniqueLabels": [
+        0,
+        3,
+        4
+      ],
+      "nonzeroVoxels": 2950
+    },
+    {
+      "id": "belief_computer_org",
+      "name": "Belief Computer Org",
+      "url": "assets/maps/belief_computer_org.nii.gz",
+      "sourceFile": "C:\\Users\\Gabriel\\Desktop\\reAnalysis_RSA_DIM\\RSA_phase_mantel_winner_vectors\\belief_computer_org\\computer_org.nii",
+      "dimensions": [
+        91,
+        109,
+        91
+      ],
+      "pixdim": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "datatype": 16,
+      "uniqueLabels": [
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "nonzeroVoxels": 10418
+    },
+    {
+      "id": "belief_couples",
+      "name": "Belief Couples",
+      "url": "assets/maps/belief_couples.nii.gz",
+      "sourceFile": "C:\\Users\\Gabriel\\Desktop\\reAnalysis_RSA_DIM\\RSA_phase_mantel_winner_vectors\\belief_couples\\belief_couples.nii",
+      "dimensions": [
+        91,
+        109,
+        91
+      ],
+      "pixdim": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "datatype": 16,
+      "uniqueLabels": [
+        0,
+        3,
+        4,
+        5
+      ],
+      "nonzeroVoxels": 7535
+    },
+    {
+      "id": "belief_fire",
+      "name": "Belief Fire",
+      "url": "assets/maps/belief_fire.nii.gz",
+      "sourceFile": "C:\\Users\\Gabriel\\Desktop\\reAnalysis_RSA_DIM\\RSA_phase_mantel_winner_vectors\\belief_fire\\belief_fire.nii",
+      "dimensions": [
+        91,
+        109,
+        91
+      ],
+      "pixdim": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "datatype": 16,
+      "uniqueLabels": [
+        0,
+        3,
+        4,
+        5,
+        6
+      ],
+      "nonzeroVoxels": 36968
+    },
+    {
+      "id": "belief_fraud_comp",
+      "name": "Belief Fraud Comp",
+      "url": "assets/maps/belief_fraud_comp.nii.gz",
+      "sourceFile": "C:\\Users\\Gabriel\\Desktop\\reAnalysis_RSA_DIM\\RSA_phase_mantel_winner_vectors\\belief_fraud_comp\\belief_fraud_comp.nii",
+      "dimensions": [
+        91,
+        109,
+        91
+      ],
+      "pixdim": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "datatype": 16,
+      "uniqueLabels": [
+        0
+      ],
+      "nonzeroVoxels": 0
+    },
+    {
+      "id": "belief_storage",
+      "name": "Belief Storage",
+      "url": "assets/maps/belief_storage.nii.gz",
+      "sourceFile": "C:\\Users\\Gabriel\\Desktop\\reAnalysis_RSA_DIM\\RSA_phase_mantel_winner_vectors\\belief_storage\\belief_storage.nii",
+      "dimensions": [
+        91,
+        109,
+        91
+      ],
+      "pixdim": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "datatype": 16,
+      "uniqueLabels": [
+        0,
+        3,
+        4
+      ],
+      "nonzeroVoxels": 4080
+    }
+  ]
+}
