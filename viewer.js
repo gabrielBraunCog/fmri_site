@@ -226,6 +226,7 @@ function renderLegend() {
   els.legend.replaceChildren(
     ...state.manifest.labels
       .filter((label) => label.code > 0)
+      .sort((a, b) => Number(activeCodes.has(b.code)) - Number(activeCodes.has(a.code)) || a.code - b.code)
       .map((label) => legendItem(label, true, activeCodes.has(label.code)))
   );
 }
