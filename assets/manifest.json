@@ -1,17 +1,17 @@
 {
   "template": {
-    "name": "MNI152 T1 2mm",
+    "name": "MNI ICBM152 2009a brain 1mm",
     "url": "assets/template/MNI152_T1_2mm.nii.gz",
-    "sourceFile": "C:\\Users\\Gabriel\\Desktop\\BIDS\\Experiment 1\\sub-08\\func\\sub-8_func_computer_T_feats.feat\\reg\\standard.nii.gz",
+    "sourceFile": "E:\\26_05_24_parcellized_dataframe\\sub_cortical_combined\\isc_scores\\p_values\\niftis\\mni_icbm152_t1_tal_nlin_asym_09a_brain.nii.gz",
     "dimensions": [
-      91,
-      109,
-      91
+      197,
+      233,
+      189
     ],
     "pixdim": [
-      2.0,
-      2.0,
-      2.0
+      1.0,
+      1.0,
+      1.0
     ],
     "datatype": 16
   },
@@ -46,7 +46,7 @@
       "model": "fmean_belief",
       "sign": "negative",
       "name": "fmean_belief negative",
-      "color": "#109618"
+      "color": "#3bb3e8"
     },
     {
       "code": 4,
@@ -54,7 +54,7 @@
       "model": "fmean_belief",
       "sign": "positive",
       "name": "fmean_belief positive",
-      "color": "#ff9900"
+      "color": "#ff5257"
     },
     {
       "code": 5,
@@ -62,7 +62,7 @@
       "model": "fextremity",
       "sign": "negative",
       "name": "fextremity negative",
-      "color": "#990099"
+      "color": "#10485d"
     },
     {
       "code": 6,
@@ -70,7 +70,7 @@
       "model": "fextremity",
       "sign": "positive",
       "name": "fextremity positive",
-      "color": "#0099c6"
+      "color": "#7f2020"
     },
     {
       "code": 7,

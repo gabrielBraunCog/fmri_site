@@ -27,6 +27,7 @@ const state = {
   overlay: null,
   selectedMap: null,
   templateWindow: { min: 0, max: 1 },
+  templateInverseAffine: null,
 };
 
 const datatypeReaders = {
@@ -83,6 +84,20 @@ function parseNifti(buffer) {
   const datatype = view.getInt16(70, littleEndian);
   const bitpix = view.getInt16(72, littleEndian);
   const voxOffset = Math.floor(view.getFloat32(108, littleEndian));
+  const sformCode = view.getInt16(254, littleEndian);
+  const affine = sformCode > 0
+    ? [
+        [view.getFloat32(280, littleEndian), view.getFloat32(284, littleEndian), view.getFloat32(288, littleEndian), view.getFloat32(292, littleEndian)],
+        [view.getFloat32(296, littleEndian), view.getFloat32(300, littleEndian), view.getFloat32(304, littleEndian), view.getFloat32(308, littleEndian)],
+        [view.getFloat32(312, littleEndian), view.getFloat32(316, littleEndian), view.getFloat32(320, littleEndian), view.getFloat32(324, littleEndian)],
+        [0, 0, 0, 1],
+      ]
+    : [
+        [pixdim[0], 0, 0, 0],
+        [0, pixdim[1], 0, 0],
+        [0, 0, pixdim[2], 0],
+        [0, 0, 0, 1],
+      ];
   const reader = datatypeReaders[datatype];
   const bytes = datatypeBytes[datatype];
 
@@ -102,7 +117,7 @@ function parseNifti(buffer) {
     if (value > max) max = value;
   }
 
-  return { dims, pixdim, datatype, bitpix, data, min, max };
+  return { dims, pixdim, datatype, bitpix, data, min, max, affine };
 }
 
 async function loadNifti(url) {
@@ -112,6 +127,52 @@ async function loadNifti(url) {
 function indexFor(volume, x, y, z) {
   const [dx, dy] = volume.dims;
   return x + y * dx + z * dx * dy;
+}
+
+function applyAffine(affine, x, y, z) {
+  return [
+    affine[0][0] * x + affine[0][1] * y + affine[0][2] * z + affine[0][3],
+    affine[1][0] * x + affine[1][1] * y + affine[1][2] * z + affine[1][3],
+    affine[2][0] * x + affine[2][1] * y + affine[2][2] * z + affine[2][3],
+  ];
+}
+
+function invertAffine(affine) {
+  const a = affine[0][0], b = affine[0][1], c = affine[0][2], tx = affine[0][3];
+  const d = affine[1][0], e = affine[1][1], f = affine[1][2], ty = affine[1][3];
+  const g = affine[2][0], h = affine[2][1], i = affine[2][2], tz = affine[2][3];
+  const det = a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
+
+  if (Math.abs(det) < 1e-8) {
+    throw new Error("Template affine cannot be inverted.");
+  }
+
+  const inv = [
+    [(e * i - f * h) / det, (c * h - b * i) / det, (b * f - c * e) / det, 0],
+    [(f * g - d * i) / det, (a * i - c * g) / det, (c * d - a * f) / det, 0],
+    [(d * h - e * g) / det, (b * g - a * h) / det, (a * e - b * d) / det, 0],
+    [0, 0, 0, 1],
+  ];
+
+  inv[0][3] = -(inv[0][0] * tx + inv[0][1] * ty + inv[0][2] * tz);
+  inv[1][3] = -(inv[1][0] * tx + inv[1][1] * ty + inv[1][2] * tz);
+  inv[2][3] = -(inv[2][0] * tx + inv[2][1] * ty + inv[2][2] * tz);
+  return inv;
+}
+
+function sampleTemplateAtOverlayVoxel(x, y, z) {
+  const world = applyAffine(state.overlay.affine, x, y, z);
+  const templateVoxel = applyAffine(state.templateInverseAffine, world[0], world[1], world[2]);
+  const tx = Math.round(templateVoxel[0]);
+  const ty = Math.round(templateVoxel[1]);
+  const tz = Math.round(templateVoxel[2]);
+  const [dx, dy, dz] = state.template.dims;
+
+  if (tx < 0 || ty < 0 || tz < 0 || tx >= dx || ty >= dy || tz >= dz) {
+    return 0;
+  }
+
+  return state.template.data[indexFor(state.template, tx, ty, tz)];
 }
 
 function percentile(values, p) {
@@ -145,13 +206,13 @@ function blend(base, overlay, alpha) {
 }
 
 function drawPlane(canvas, plane) {
-  if (!state.template) return;
+  if (!state.template || !state.overlay) return;
 
   const ctx = canvas.getContext("2d", { willReadFrequently: false });
   const overlayVisible = els.overlayToggle.checked && state.overlay;
   const overlayAlpha = Number(els.opacitySlider.value) / 100;
   const labels = labelMap();
-  const [dx, dy, dz] = state.template.dims;
+  const [dx, dy, dz] = state.overlay.dims;
 
   let width;
   let height;
@@ -183,8 +244,8 @@ function drawPlane(canvas, plane) {
   for (let v = 0; v < height; v += 1) {
     for (let u = 0; u < width; u += 1) {
       const [x, y, z] = voxelAt(u, v);
-      const i = indexFor(state.template, x, y, z);
-      let r = templateGray(state.template.data[i]);
+      const i = indexFor(state.overlay, x, y, z);
+      let r = templateGray(sampleTemplateAtOverlayVoxel(x, y, z));
       let g = r;
       let b = r;
 
@@ -276,6 +337,16 @@ function renderMapDetails() {
   els.mapSummary.textContent = `${map.name}: labels ${map.uniqueLabels.join(", ")}`;
 }
 
+function updateSliderBounds(volume) {
+  const [dx, dy, dz] = volume.dims;
+  els.xSlider.max = dx - 1;
+  els.ySlider.max = dy - 1;
+  els.zSlider.max = dz - 1;
+  els.xSlider.value = Math.min(Number(els.xSlider.value), dx - 1);
+  els.ySlider.value = Math.min(Number(els.ySlider.value), dy - 1);
+  els.zSlider.value = Math.min(Number(els.zSlider.value), dz - 1);
+}
+
 function focusOverlayCenter() {
   if (!state.overlay || state.selectedMap.nonzeroVoxels === 0) return;
 
@@ -311,13 +382,14 @@ async function selectMap(id) {
   state.selectedMap = state.manifest.maps.find((map) => map.id === id);
   setStatus("Loading");
   state.overlay = await loadNifti(state.selectedMap.url);
+  updateSliderBounds(state.overlay);
   focusOverlayCenter();
   renderMapDetails();
   renderAll();
 }
 
 function configureControls() {
-  const [dx, dy, dz] = state.template.dims;
+  const [dx, dy, dz] = state.manifest.maps[0].dimensions;
   els.xSlider.max = dx - 1;
   els.ySlider.max = dy - 1;
   els.zSlider.max = dz - 1;
@@ -352,6 +424,7 @@ async function init() {
     state.manifest = await response.json();
     setStatus("Template");
     state.template = await loadNifti(state.manifest.template.url);
+    state.templateInverseAffine = invertAffine(state.template.affine);
     state.templateWindow = {
       min: percentile(state.template.data, 0.02),
       max: percentile(state.template.data, 0.98),

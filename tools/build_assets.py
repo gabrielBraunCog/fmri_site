@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(r"C:\Users\Gabriel\Desktop\reAnalysis_RSA_DIM\RSA_phase_mantel_winner_vectors")
 TEMPLATE_SOURCE = Path(
-    r"C:\Users\Gabriel\Desktop\BIDS\Experiment 1\sub-08\func\sub-8_func_computer_T_feats.feat\reg\standard.nii.gz"
+    r"E:\26_05_24_parcellized_dataframe\sub_cortical_combined\isc_scores\p_values\niftis\mni_icbm152_t1_tal_nlin_asym_09a_brain.nii.gz"
 )
 
 MAP_SOURCES = [
@@ -24,10 +24,10 @@ LABELS = [
     {"code": 0, "originalSignedCode": 0, "model": "none", "sign": "not_significant", "name": "Not significant", "color": "#000000"},
     {"code": 1, "originalSignedCode": -1, "model": "fdist", "sign": "negative", "name": "fdist negative", "color": "#3366cc"},
     {"code": 2, "originalSignedCode": 1, "model": "fdist", "sign": "positive", "name": "fdist positive", "color": "#dc3912"},
-    {"code": 3, "originalSignedCode": -2, "model": "fmean_belief", "sign": "negative", "name": "fmean_belief negative", "color": "#109618"},
-    {"code": 4, "originalSignedCode": 2, "model": "fmean_belief", "sign": "positive", "name": "fmean_belief positive", "color": "#ff9900"},
-    {"code": 5, "originalSignedCode": -3, "model": "fextremity", "sign": "negative", "name": "fextremity negative", "color": "#990099"},
-    {"code": 6, "originalSignedCode": 3, "model": "fextremity", "sign": "positive", "name": "fextremity positive", "color": "#0099c6"},
+    {"code": 3, "originalSignedCode": -2, "model": "fmean_belief", "sign": "negative", "name": "fmean_belief negative", "color": "#3bb3e8"},
+    {"code": 4, "originalSignedCode": 2, "model": "fmean_belief", "sign": "positive", "name": "fmean_belief positive", "color": "#ff5257"},
+    {"code": 5, "originalSignedCode": -3, "model": "fextremity", "sign": "negative", "name": "fextremity negative", "color": "#10485d"},
+    {"code": 6, "originalSignedCode": 3, "model": "fextremity", "sign": "positive", "name": "fextremity positive", "color": "#7f2020"},
     {"code": 7, "originalSignedCode": -4, "model": "fside", "sign": "negative", "name": "fside negative", "color": "#dd4477"},
     {"code": 8, "originalSignedCode": 4, "model": "fside", "sign": "positive", "name": "fside positive", "color": "#66aa00"},
     {"code": 9, "originalSignedCode": -5, "model": "f3cat", "sign": "negative", "name": "f3cat negative", "color": "#b82e2e"},
@@ -108,7 +108,7 @@ def main():
 
     manifest = {
         "template": {
-            "name": "MNI152 T1 2mm",
+            "name": "MNI ICBM152 2009a brain 1mm",
             "url": "assets/template/MNI152_T1_2mm.nii.gz",
             "sourceFile": str(TEMPLATE_SOURCE),
             "dimensions": template_header["dimensions"],
