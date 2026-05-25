@@ -46,7 +46,7 @@
       "model": "fmean_belief",
       "sign": "negative",
       "name": "fmean_belief negative",
-      "color": "#3bb3e8"
+      "color": "#7f2020"
     },
     {
       "code": 4,
@@ -70,7 +70,7 @@
       "model": "fextremity",
       "sign": "positive",
       "name": "fextremity positive",
-      "color": "#7f2020"
+      "color": "#3bb3e8"
     },
     {
       "code": 7,
