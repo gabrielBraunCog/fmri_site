@@ -1,17 +1,17 @@
 {
   "template": {
-    "name": "MNI ICBM152 2009a brain 1mm",
+    "name": "MNI152 T1 2mm",
     "url": "assets/template/MNI152_T1_2mm.nii.gz",
-    "sourceFile": "E:\\26_05_24_parcellized_dataframe\\sub_cortical_combined\\isc_scores\\p_values\\niftis\\mni_icbm152_t1_tal_nlin_asym_09a_brain.nii.gz",
+    "sourceFile": "C:\\Users\\Gabriel\\Desktop\\BIDS\\Experiment 1\\sub-08\\func\\sub-8_func_computer_T_feats.feat\\reg\\standard.nii.gz",
     "dimensions": [
-      197,
-      233,
-      189
+      91,
+      109,
+      91
     ],
     "pixdim": [
-      1.0,
-      1.0,
-      1.0
+      2.0,
+      2.0,
+      2.0
     ],
     "datatype": 16
   },

@@ -8,7 +8,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(r"C:\Users\Gabriel\Desktop\reAnalysis_RSA_DIM\RSA_phase_mantel_winner_vectors")
 TEMPLATE_SOURCE = Path(
-    r"E:\26_05_24_parcellized_dataframe\sub_cortical_combined\isc_scores\p_values\niftis\mni_icbm152_t1_tal_nlin_asym_09a_brain.nii.gz"
+    r"C:\Users\Gabriel\Desktop\BIDS\Experiment 1\sub-08\func\sub-8_func_computer_T_feats.feat\reg\standard.nii.gz"
 )
 
 MAP_SOURCES = [
@@ -108,7 +108,7 @@ def main():
 
     manifest = {
         "template": {
-            "name": "MNI ICBM152 2009a brain 1mm",
+            "name": "MNI152 T1 2mm",
             "url": "assets/template/MNI152_T1_2mm.nii.gz",
             "sourceFile": str(TEMPLATE_SOURCE),
             "dimensions": template_header["dimensions"],
