@@ -5,7 +5,6 @@ const els = {
   opacityValue: document.querySelector("#opacityValue"),
   loadStatus: document.querySelector("#loadStatus"),
   mapSummary: document.querySelector("#mapSummary"),
-  activeLabels: document.querySelector("#activeLabels"),
   legend: document.querySelector("#legend"),
   gridValue: document.querySelector("#gridValue"),
   voxelValue: document.querySelector("#voxelValue"),
@@ -223,20 +222,21 @@ function renderAll() {
 }
 
 function renderLegend() {
+  const activeCodes = new Set(state.selectedMap?.uniqueLabels?.filter((code) => code > 0) ?? []);
   els.legend.replaceChildren(
     ...state.manifest.labels
       .filter((label) => label.code > 0)
-      .map((label) => legendItem(label, true))
+      .map((label) => legendItem(label, true, activeCodes.has(label.code)))
   );
 }
 
-function legendItem(label, showCode) {
+function legendItem(label, showCode, isActive = true) {
   const row = document.createElement("div");
-  row.className = "legend-item";
+  row.className = `legend-item ${isActive ? "active" : "inactive"}`;
 
   const swatch = document.createElement("span");
   swatch.className = "swatch";
-  swatch.style.background = label.color;
+  swatch.style.background = isActive ? label.color : "";
 
   const text = document.createElement("span");
   text.className = "legend-text";
@@ -260,13 +260,8 @@ function renderMapDetails() {
   const active = map.uniqueLabels.filter((code) => code > 0).map((code) => labels.get(code)).filter(Boolean);
 
   if (active.length) {
-    els.activeLabels.replaceChildren(...active.map((label) => legendItem(label, true)));
     setStatus("Ready", "ready");
   } else {
-    const empty = document.createElement("div");
-    empty.className = "empty-state";
-    empty.textContent = "No significant voxels in this map.";
-    els.activeLabels.replaceChildren(empty);
     setStatus("No overlay", "warning");
   }
 
@@ -274,6 +269,7 @@ function renderMapDetails() {
   els.voxelValue.textContent = `${map.pixdim.join(" x ")} mm`;
   els.nonzeroValue.textContent = map.nonzeroVoxels.toLocaleString();
   els.mapSummary.textContent = `${map.name}: labels ${map.uniqueLabels.join(", ")}`;
+  renderLegend();
 }
 
 function updateSliderBounds(volume) {
@@ -368,7 +364,6 @@ async function init() {
       max: percentile(state.template.data, 0.98),
     };
     configureControls();
-    renderLegend();
     await selectMap(state.manifest.maps[0].id);
   } catch (error) {
     console.error(error);

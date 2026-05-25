@@ -238,6 +238,26 @@ canvas {
   background: var(--panel);
 }
 
+.legend-item.inactive {
+  opacity: 0.42;
+}
+
+.legend-item.inactive .swatch {
+  background: #68727d;
+  border-color: #7a8591;
+}
+
+.legend-item.inactive .legend-text strong,
+.legend-item.inactive .legend-text span,
+.legend-item.inactive .code {
+  color: #87919b;
+}
+
+.legend-item.active {
+  border-color: rgba(91, 191, 186, 0.45);
+  background: #1b2025;
+}
+
 .empty-state {
   grid-template-columns: minmax(0, 1fr);
   color: var(--muted);
